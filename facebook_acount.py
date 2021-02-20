@@ -3,13 +3,17 @@ import os
 import json
 
 from selenium import webdriver
+from selenium.webdriver import ChromeOptions
 
 
 class FacebookAccount():
     def __init__(self, email, password):
         self.email = email
         self.password = password
-        self.driver = webdriver.Chrome()
+        opt = ChromeOptions()
+        opt.add_argument('--no-sandbox')
+
+        self.driver = webdriver.Chrome(chrome_options=opt)
         self.driver.get('https://www.facebook.com/login.php')
 
     def login(self):
@@ -51,7 +55,7 @@ class FacebookAccount():
         time.sleep(5)
         self.execute_script(file_path='', script='token = null')
         self.execute_script(file_path='get_token_script.txt', script='')
-        time.sleep(7)
+        time.sleep(15)
         token = self.execute_script(file_path='', script='return token')
         return token
 
