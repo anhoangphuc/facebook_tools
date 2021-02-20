@@ -51,6 +51,9 @@ class FacebookAccount():
         time.sleep(5)
         self.execute_script(file_path='', script='token = null')
         self.execute_script(file_path='get_token_script.txt', script='')
-        time.sleep(10)
+        time.sleep(7)
         token = self.execute_script(file_path='', script='return token')
         return token
+
+    def close(self):
+        self.driver.close()

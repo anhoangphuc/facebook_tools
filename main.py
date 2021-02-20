@@ -21,6 +21,7 @@ def fetch():
     token = my_account.get_token()
 
     result = {'cookies': cookies, 'token': token}
+    my_account.close()
     return jsonify(result)
 
 if __name__ == '__main__':
