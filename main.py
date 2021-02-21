@@ -10,18 +10,21 @@ def hello():
 
 @app.route('/fetch', methods=['POST'])
 def fetch():
-    email = request.form['email']
-    password = request.form['password']
+    try:
+        email = request.form['email']
+        password = request.form['password']
 
-    my_account = FacebookAccount(email, password)
-    my_account.login()
-    cookies = my_account.get_cookies()
-    # print(cookies)
-    # print(my_account.get_cookie('c_user') or "No cookie")
-    token = my_account.get_token()
+        my_account = FacebookAccount(email, password)
+        my_account.login()
+        cookies = my_account.get_cookies()
+        token = my_account.get_token()
 
-    result = {'cookies': cookies, 'token': token}
-    my_account.close()
+        result = {'status': 0, 'cookies': cookies, 'token': token}
+    except Exception as err:
+        result = {'status': 1, 'error': err}
+    finally:
+        my_account.close()
+    
     return jsonify(result)
 
 if __name__ == '__main__':

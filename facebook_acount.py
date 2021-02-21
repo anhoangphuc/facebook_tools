@@ -12,6 +12,7 @@ class FacebookAccount():
         self.password = password
         opt = ChromeOptions()
         opt.add_argument('--no-sandbox')
+        opt.add_argument('--headless')
 
         self.driver = webdriver.Chrome(chrome_options=opt)
         self.driver.get('https://www.facebook.com/login.php')
