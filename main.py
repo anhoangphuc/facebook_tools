@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-
+from pyvirtualdisplay import Display
 from facebook_acount import FacebookAccount
 
 app = Flask(__name__)
@@ -10,6 +10,8 @@ def hello():
 
 @app.route('/fetch', methods=['POST'])
 def fetch():
+    display = Display(visible=0)
+    display.start()
     try:
         email = request.form['email']
         password = request.form['password']
@@ -23,6 +25,7 @@ def fetch():
     except Exception as err:
         result = {'status': 1, 'error': err}
     finally:
+        display.stop()
         my_account.close()
     
     return jsonify(result)
