@@ -21,9 +21,12 @@ def fetch():
         cookies = my_account.get_cookies()
         token = my_account.get_token()
 
-        result = {'status': 0, 'cookies': cookies, 'token': token}
+        if token != '':
+            result = {'status': 0, 'cookies': cookies, 'token': token}
+        else:
+            result = {'status': 1, 'cookies': cookies, 'token': ''}
     except Exception as err:
-        result = {'status': 1, 'error': err}
+        result = {'status': 2, 'error': err}
     finally:
         display.stop()
         my_account.close()

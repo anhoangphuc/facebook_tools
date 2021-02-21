@@ -54,10 +54,14 @@ class FacebookAccount():
         redirected_url = f'https://m.facebook.com/{self.get_c_user()}'
         self.driver.get(redirected_url)
         time.sleep(5)
-        self.execute_script(file_path='', script='token = null')
+        self.execute_script(file_path='', script="token = ''")
         self.execute_script(file_path='get_token_script.txt', script='')
-        time.sleep(25)
-        token = self.execute_script(file_path='', script='return token')
+        token = ''
+        cnt = 0
+        while token == '' and cnt < 10:
+            time.sleep(5)
+            token = self.execute_script(file_path='', script='return token')
+
         return token
 
     def close(self):
